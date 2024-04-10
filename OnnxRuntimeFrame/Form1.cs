@@ -18,11 +18,33 @@ namespace OnnxRuntimeFrame
 
     public partial class Form1 : Form
     {
-        string thisExeDirPath;
         public Form1()
         {
             InitializeComponent();
             thisExeDirPath = Path.GetDirectoryName(Application.ExecutablePath);
+        }
+
+        string thisExeDirPath;
+
+        private DenseTensor<float> getDenseTensorFromImage(string imageFilePath, int width, int height)
+        {
+            var input = new DenseTensor<float>(new[] { 1, 3, width, height });
+
+            using (var bitmap = new Bitmap(Image.FromFile(imageFilePath), width, height))
+            {
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    for (int x = 0; x < bitmap.Width; x++)
+                    {
+                        var color = bitmap.GetPixel(x, y);
+                        input[0, 0, y, x] = color.B;
+                        input[0, 1, y, x] = color.G;
+                        input[0, 2, y, x] = color.R;
+                    }
+                }
+            }
+
+            return input;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -90,26 +112,13 @@ namespace OnnxRuntimeFrame
                 var inputName = inputMeta.First().Key;
                 var inputDims = inputMeta.First().Value.Dimensions;
 
-                using (var bitmap = new Bitmap(Image.FromFile(imageFilePath), inputDims[2], inputDims[3]))
-                {
-                    var input = new DenseTensor<float>(new[] { 1, 3, inputDims[2], inputDims[3] });
-                    for (int y = 0; y < bitmap.Height; y++)
-                    {
-                        for (int x = 0; x < bitmap.Width; x++)
-                        {
-                            var color = bitmap.GetPixel(x, y);
-                            input[0, 0, y, x] = color.B;
-                            input[0, 1, y, x] = color.G;
-                            input[0, 2, y, x] = color.R;
-                        }
-                    }
+                var input = getDenseTensorFromImage(imageFilePath, inputDims[2], inputDims[3]);
 
-                    var inputs = new NamedOnnxValue[] { NamedOnnxValue.CreateFromTensor(inputName, input) };
-                    using (var results = session.Run(inputs))
-                    {
-                        var output = results.First().AsEnumerable<float>().Select(x => x.ToString()).ToArray();
-                        textBox_Result.Text = string.Join(", ", output);
-                    }
+                var inputs = new NamedOnnxValue[] { NamedOnnxValue.CreateFromTensor(inputName, input) };
+                using (var results = session.Run(inputs))
+                {
+                    var output = results.First().AsEnumerable<float>().Select(x => x.ToString()).ToArray();
+                    textBox_Result.Text = string.Join(", ", output);
                 }
             }
         }
