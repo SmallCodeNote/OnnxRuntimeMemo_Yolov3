@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 15 for Windows Desktop
+VisualStudioVersion = 15.0.34112.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnnxRuntime_ObjectDetectionFrame", "OnnxRuntime_ObjectDetectionFrame\OnnxRuntime_ObjectDetectionFrame.csproj", "{548728BD-A6A7-4EA5-BD30-E6879677CF08}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{548728BD-A6A7-4EA5-BD30-E6879677CF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{548728BD-A6A7-4EA5-BD30-E6879677CF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{548728BD-A6A7-4EA5-BD30-E6879677CF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{548728BD-A6A7-4EA5-BD30-E6879677CF08}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {593BA05C-55AE-42B4-B988-62E4338FAB53}
+	EndGlobalSection
+EndGlobal
